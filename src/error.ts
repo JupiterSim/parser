@@ -1,17 +1,9 @@
+import { DebugInfo } from './debug';
+
 /**
  * Parser error.
  */
-export interface ParseError {
-  /** Source file name. */
-  readonly filename: string;
-  /** Error line number. */
-  readonly line: number;
-  /** Error column number. */
-  readonly column: number;
-  /** Error source. */
-  readonly source: string;
-  /** Error indicator. */
-  readonly indicator: number;
+export interface ParseError extends DebugInfo {
   /** Error message. */
   readonly message: string;
 }
