@@ -43,24 +43,31 @@ export interface RType extends Format {
 export interface IType extends Format {
   /** Destination register. */
   readonly rd: number;
-  /** Source register. */
+  /** Source register 1. */
   readonly rs1: number;
   /** Immediate expression. */
-  readonly expr: Expression;
+  readonly expr: Expression | undefined;
 }
 
 /** RISC-V S format. */
-export type SType = IType;
+export interface SType extends Format {
+  /** Source register 1 */
+  readonly rs1: number;
+  /** Source register 2. */
+  readonly rs2: number;
+  /** Immediate expression. */
+  readonly expr: Expression | undefined;
+}
 
 /** RISC-V B format. */
-export type BType = IType;
+export type BType = SType;
 
 /** RISC-V U format. */
 export interface UType extends Format {
   /** Destination register. */
   rd: number;
   /** Immediate expression. */
-  expr: Expression;
+  expr: Expression | undefined;
 }
 
 /** RISC-V J format. */
