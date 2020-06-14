@@ -7,7 +7,7 @@ import { DebugInfo } from './debug';
  */
 export interface Label {
   /** Symbol segment. */
-  readonly segmnet: Segment;
+  readonly segment: Segment;
   /** Symbol debug information. */
   readonly debugInfo: DebugInfo;
   /** Symbol address. */
