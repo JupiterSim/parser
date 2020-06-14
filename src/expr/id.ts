@@ -54,8 +54,8 @@ export class Id extends Expression {
   }
 
   /** {@inheritdoc} */
-  build(pc: number, visited: string[] = []): number {
-    if (_.indexOf(visited, this.value) !== -1) {
+  build(pc: number, visited: string[]): number {
+    if (_.indexOf(visited, this.value) === -1) {
       visited.push(this.value);
       const absolute = this.getAddress(pc, visited);
       const delta = absolute - pc;
