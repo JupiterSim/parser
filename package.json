@@ -1,0 +1,63 @@
+{
+  "name": "@jupitersim/rv32g",
+  "description": "Jupiter Simulator RISC-V RV32G Parser",
+  "version": "0.0.1",
+  "author": "Andrés Castellanos <andres.cv@galileo.edu>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/JupiterSim/parser",
+  "main": "index.js",
+  "files": [
+    "lib/**/*.js",
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JupiterSim/parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JupiterSim/parser/issues"
+  },
+  "keywords": [
+    "RISC-V",
+    "Parser",
+    "RV32G",
+    "JupiterSim",
+    "ANTLr4"
+  ],
+  "scripts": {
+    "grammar": "java -jar antlr/antlr-4.8.jar src/syntax/RISCV.g4 -Dlanguage=JavaScript",
+    "lint": "eslint --fix --ext '.ts' src",
+    "test": "ts-mocha test/**/*.ts",
+    "coverage": "nyc ts-mocha test/**/*.ts",
+    "build": "del dist && eslint --fix --ext '.ts' src && tsc",
+    "copy": "cpy package.json dist && cpy LICENSE dist && cpy README.md"
+  },
+  "devDependencies": {
+    "@types/antlr4": "^4.7.1",
+    "@types/chai": "^4.2.11",
+    "@types/lodash": "^4.14.155",
+    "@types/mocha": "^7.0.2",
+    "@typescript-eslint/eslint-plugin": "^3.2.0",
+    "@typescript-eslint/parser": "^3.2.0",
+    "chai": "^4.2.0",
+    "cpy-cli": "^3.1.1",
+    "del-cli": "^3.0.1",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-tsdoc": "^0.2.5",
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.0.5",
+    "ts-mocha": "^7.0.0",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@jupitersim/helpers": "^1.0.0"
+  }
+}
