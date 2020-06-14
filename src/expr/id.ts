@@ -87,6 +87,6 @@ export class Id extends Expression {
 
   /** {@inheritdoc} */
   hasIds(): boolean {
-    return false;
+    return true;
   }
 }
