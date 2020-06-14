@@ -58,6 +58,7 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "@jupitersim/helpers": "^1.0.0"
+    "@jupitersim/helpers": "^1.0.0",
+    "antlr4": "^4.8.0"
   }
 }
