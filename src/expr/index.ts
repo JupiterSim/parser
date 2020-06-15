@@ -5,5 +5,5 @@ export { Plus } from './plus';
 export { Float } from './float';
 export { Minus } from './minus';
 export { UMinus } from './uminus';
-export { Number } from './number';
+export { Constant } from './constant';
 export { Expression } from './expr';

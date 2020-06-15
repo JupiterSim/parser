@@ -2,7 +2,7 @@ import { Segment } from '../../src/segment';
 import { DebugInfo } from '../../src/debug';
 import { SymbolTable } from '../../src/table';
 import { Relocation } from '../../src/relocation';
-import { Number, Id, Plus } from '../../src/expr';
+import { Constant, Id, Plus } from '../../src/expr';
 
 // Dummy debug information.
 export const debugInfo: DebugInfo = {
@@ -38,7 +38,7 @@ export const st: SymbolTable = {
   },
   expr: {
     'test.s': {
-      x: new Number(debugInfo, '10')
+      x: new Constant(debugInfo, '10')
     }
   }
 };
@@ -51,8 +51,8 @@ st.expr['test.s'].y = new Plus(
 );
 
 // Dummy constants
-export const three = new Number(debugInfo, '3');
-export const one = new Number(debugInfo, '1');
+export const three = new Constant(debugInfo, '3');
+export const one = new Constant(debugInfo, '1');
 export const id = new Id(debugInfo, 'test', Relocation.HI, st);
 export const eSym = new Id(debugInfo, 'x', Relocation.ABSOLUTE, st);
 export const eGlob = new Id(debugInfo, 'main', Relocation.ABSOLUTE, st);

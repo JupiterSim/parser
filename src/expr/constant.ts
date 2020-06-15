@@ -3,16 +3,16 @@ import { atoi } from '@jupitersim/helpers';
 import { Expression, ExpressionError } from './expr';
 
 /**
- * Number assembler expression.
+ * Constant assembler expression.
  */
-export class Number extends Expression {
-  /** Number literal. */
+export class Constant extends Expression {
+  /** Constant literal. */
   private value: string;
 
   /**
-   * Creates a new number expression.
+   * Creates a new constant expression.
    *
-   * @param value - Number literal to convert to number.
+   * @param value - Constant literal to convert to number.
    */
   constructor(debugInfo: DebugInfo, value: string) {
     super(debugInfo);
