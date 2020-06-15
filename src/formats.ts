@@ -72,3 +72,9 @@ export interface UType extends Format {
 
 /** RISC-V J format. */
 export type JType = UType;
+
+/** RISC-V pseudo */
+export interface Pseudo extends Format {
+  /** List of true assemble language instructions. */
+  tal: Array<R4Type | RType | IType | SType | BType | UType | JType>;
+}
