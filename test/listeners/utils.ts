@@ -4,18 +4,6 @@ import { Constant } from '../../src/expr';
 import { Segment } from '../../src/segment';
 import { UType, JType, SType, BType, IType, RType, R4Type, Pseudo } from '../../src';
 
-const options = {
-  pseudos: true,
-  extensions: {
-    m: true,
-    a: true,
-    f: true,
-    d: true,
-    zicsr: false,
-    zifencei: false
-  }
-};
-
 export const debugInfo = {
   filename: 'test.s',
   line: 1,
@@ -60,7 +48,17 @@ export class Test extends RV32G {
           }
         }
       },
-      options
+      {
+        pseudos: true,
+        extensions: {
+          m: true,
+          a: true,
+          f: true,
+          d: true,
+          zicsr: true,
+          zifencei: true
+        }
+      }
     );
   }
 
