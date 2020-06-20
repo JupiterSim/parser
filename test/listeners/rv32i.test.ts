@@ -1,4 +1,6 @@
+import chai from 'chai';
 import { Test } from './utils';
+import sinon, { SinonSpy } from 'sinon';
 import { RType, UType, JType, IType, BType, SType, Pseudo } from '../../src/formats';
 
 const code = `
@@ -78,6 +80,11 @@ const code = `
   ret
   call test
   tail test
+
+  li a0, 5 + 5
+  li a0, -2047 - 1
+  li a0, 2049
+  li a0, test
 `;
 
 class RV32IEmpty extends Test {
@@ -87,8 +94,10 @@ class RV32IEmpty extends Test {
 }
 
 class RV32I extends Test {
-  constructor() {
+  private: SinonSpy;
+  constructor(spy: SinonSpy) {
     super(code);
+    this.spy = spy;
   }
 
   disable(): void {
@@ -387,13 +396,70 @@ class RV32I extends Test {
   tail = (ctx: Pseudo): void => {
     this.testGlobalLoad('tail', 'jalr', 0, 6, 765101, -1278, ctx);
   };
+
+  li = (info: Pseudo): void => {
+    this.spy(info);
+  };
 }
 
 describe('RV32I', () => {
-  const rv32i = new RV32I();
+  const spy = sinon.spy();
+  const rv32i = new RV32I(spy);
   rv32i.parse();
   rv32i.disable();
   rv32i.parse();
   const rv32iEmpty = new RV32IEmpty();
   rv32iEmpty.parse();
+  const li1 = spy.getCall(0).args[0];
+  const li2 = spy.getCall(1).args[0];
+  const li3 = spy.getCall(2).args[0];
+  const li4 = spy.getCall(3).args[0];
+  it('mnemonic should be li', () => {
+    chai.expect(li1.mnemonic).to.eq('li');
+    chai.expect(li2.mnemonic).to.eq('li');
+    chai.expect(li3.mnemonic).to.eq('li');
+    chai.expect(li4.mnemonic).to.eq('li');
+  });
+  it('li a0, 5 + 5 should be converted to addi a0, x0, 5 + 5', () => {
+    chai.expect(li1.tal.length).to.eq(1);
+    const addi = li1.tal[0];
+    chai.expect(addi.mnemonic).to.eq('addi');
+    chai.expect(addi.rd).to.eq(10);
+    chai.expect(addi.rs1).to.eq(0);
+    chai.expect(addi.expr.build(0, [])).to.eq(10);
+  });
+  it('li a0, -2047 - 1 should be converted to addi a0, x0, -2047 - 1', () => {
+    chai.expect(li2.tal.length).to.eq(1);
+    const addi = li2.tal[0];
+    chai.expect(addi.mnemonic).to.eq('addi');
+    chai.expect(addi.rd).to.eq(10);
+    chai.expect(addi.rs1).to.eq(0);
+    chai.expect(addi.expr.build(0, [])).to.eq(-2048);
+  });
+  it('li a0, 2049 should be converted to lui a0, 1; addi a0, a0, -2047', () => {
+    chai.expect(li3.tal.length).to.eq(2);
+    const lui = li3.tal[0];
+    const addi = li3.tal[1];
+    chai.expect(lui.mnemonic).to.eq('lui');
+    chai.expect(lui.rd).to.eq(10);
+    chai.expect(lui.expr.build(0, [])).to.eq(1);
+    chai.expect(addi.mnemonic).to.eq('addi');
+    chai.expect(addi.rd).to.eq(10);
+    chai.expect(addi.rs1).to.eq(10);
+    chai.expect(addi.expr.build(0, [])).to.eq(-2047);
+    chai.expect(addi.expr.build(0, []) + (lui.expr.build(0, []) << 12)).to.eq(2049);
+  });
+  it('li a0, test should be converted to lui a0, 765101; addi a0, a0, -1282', () => {
+    chai.expect(li4.tal.length).to.eq(2);
+    const lui = li4.tal[0];
+    const addi = li4.tal[1];
+    chai.expect(lui.mnemonic).to.eq('lui');
+    chai.expect(lui.rd).to.eq(10);
+    chai.expect(lui.expr.build(0, [])).to.eq(765101);
+    chai.expect(addi.mnemonic).to.eq('addi');
+    chai.expect(addi.rd).to.eq(10);
+    chai.expect(addi.rs1).to.eq(10);
+    chai.expect(addi.expr.build(0, [])).to.eq(-1282);
+    chai.expect(addi.expr.build(0, []) + (lui.expr.build(0, []) << 12)).to.eq(-1161114882);
+  });
 });
