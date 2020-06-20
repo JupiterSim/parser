@@ -433,7 +433,7 @@ export abstract class RV32G extends Zifencei(Zicsr(A(M(I(Expr(Directives(Lbl(RIS
    */
   // eslint-disable-next-line
   // @ts-ignore
-  private getIType(mnemonic: any, rd: any, rs1: any, uimm: boolean = false): IType {
+  private getIType(mnemonic: any, rd: any, rs1: any, uimm = false): IType {
     return {
       debugInfo: this.getDebugInfo(mnemonic),
       mnemonic: mnemonic.symbol.text,
