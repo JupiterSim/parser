@@ -372,7 +372,7 @@ export const I = (superclass: any) =>
     /** {@inheritdoc} */
     exitLIPSEUDO(ctx: any) {
       if (this.options.pseudos && _.isFunction(this.li)) {
-        this.li(this.getLIPseudo(ctx.I_LI(), ctx.XREG()));
+        this.li(this.getLiPseudo(ctx.I_LI(), ctx.XREG()));
       }
     }
 
