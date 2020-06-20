@@ -1,10 +1,10 @@
-import * as _ from 'lodash';
 import { ASMFile } from './file';
 import { DebugInfo } from './debug';
 import { ParseError } from './error';
 import { SymbolTable } from './table';
 import { ParserOptions } from './options';
 import { Relocation } from './relocation';
+import { isUndefined, sortBy, find } from 'lodash';
 import { M, I, Expr, Lbl, Directives } from './listeners';
 import { Expression, Id, Lo, Hi, Constant } from './expr';
 import { getRegisterNumber, between } from '@jupitersim/helpers';
@@ -251,7 +251,7 @@ export abstract class RV32G extends M(I(Expr(Directives(Lbl(RISCVListener))))) {
    * @returns List of parsing errors sorted by line number.
    */
   getErrors(): ParseError[] {
-    return _.sortBy(this.errors, ['line']);
+    return sortBy(this.errors, ['line']);
   }
 
   /**
@@ -262,7 +262,7 @@ export abstract class RV32G extends M(I(Expr(Directives(Lbl(RISCVListener))))) {
    * @param message - Error message.
    */
   protected addError(line: number, column: number, message: string): void {
-    if (_.isUndefined(_.find(this.errors, { line }))) {
+    if (isUndefined(find(this.errors, { line }))) {
       const [source, indicator] = this.getSourceAndIndicator(line, column);
       // update error
       this.errors.push({
@@ -316,7 +316,7 @@ export abstract class RV32G extends M(I(Expr(Directives(Lbl(RISCVListener))))) {
       mnemonic: mnemonic.symbol.text,
       rd: this.getRegisterNumber(rd),
       rs1: this.getRegisterNumber(rs1),
-      rs2: _.isUndefined(rs2) ? 0 : this.getRegisterNumber(rs2)
+      rs2: isUndefined(rs2) ? 0 : this.getRegisterNumber(rs2)
     };
   }
 

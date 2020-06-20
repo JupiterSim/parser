@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { isFunction } from 'lodash';
 
 /**
  * Label Mixing.
@@ -9,7 +9,7 @@ export const Lbl = (superclass: any) =>
   class extends superclass {
     /** {@inheritdoc} */
     exitLABEL(ctx: any) {
-      if (_.isFunction(this.label)) {
+      if (isFunction(this.label)) {
         const label = ctx.LABEL();
         this.label({
           debugInfo: this.getDebugInfo(label),

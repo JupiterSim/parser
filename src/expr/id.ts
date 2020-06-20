@@ -1,7 +1,7 @@
-import * as _ from 'lodash';
 import { DebugInfo } from '../debug';
 import { SymbolTable } from '../table';
 import { Relocation } from '../relocation';
+import { isUndefined, indexOf } from 'lodash';
 import { signExtend } from '@jupitersim/helpers';
 import { Expression, ExpressionError } from './expr';
 
@@ -43,11 +43,11 @@ export class Id extends Expression {
     const id = this.value;
     const st = this.st;
     const filename = this.debugInfo.filename;
-    if (!_.isUndefined(st.locals[filename][id])) {
+    if (!isUndefined(st.locals[filename][id])) {
       return st.locals[filename][id].address;
-    } else if (!_.isUndefined(st.expr[filename][id])) {
+    } else if (!isUndefined(st.expr[filename][id])) {
       return st.expr[filename][id].build(pc, visited);
-    } else if (!_.isUndefined(st.globals[id])) {
+    } else if (!isUndefined(st.globals[id])) {
       return st.globals[id].address;
     }
     throw new ExpressionError(`symbol '${id}' used but not defined`, this.debugInfo);
@@ -55,7 +55,7 @@ export class Id extends Expression {
 
   /** {@inheritdoc} */
   build(pc: number, visited: string[]): number {
-    if (_.indexOf(visited, this.value) === -1) {
+    if (indexOf(visited, this.value) === -1) {
       visited.push(this.value);
       const absolute = this.getAddress(pc, visited);
       const delta = absolute - pc;

@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { isFunction } from 'lodash';
 
 /**
  * RV32I Mixing.
@@ -16,266 +16,266 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitLUI(ctx: any) {
-      if (_.isFunction(this.lui)) {
+      if (isFunction(this.lui)) {
         this.lui(this.getUType(ctx.I_LUI(), ctx.XREG(0)));
       }
     }
 
     /** {@inheritdoc} */
     exitAUIPC(ctx: any) {
-      if (_.isFunction(this.auipc)) {
+      if (isFunction(this.auipc)) {
         this.auipc(this.getUType(ctx.I_AUIPC(), ctx.XREG(0)));
       }
     }
 
     /** {@inheritdoc} */
     exitJAL(ctx: any) {
-      if (_.isFunction(this.jal)) {
+      if (isFunction(this.jal)) {
         this.jal(this.getJType(ctx.I_JAL(), ctx.XREG(0), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitJALR(ctx: any) {
-      if (_.isFunction(this.jalr)) {
+      if (isFunction(this.jalr)) {
         this.jalr(this.getIType(ctx.I_JALR(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitBEQ(ctx: any) {
-      if (_.isFunction(this.beq)) {
+      if (isFunction(this.beq)) {
         this.beq(this.getBType(ctx.I_BEQ(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitBNE(ctx: any) {
-      if (_.isFunction(this.bne)) {
+      if (isFunction(this.bne)) {
         this.bne(this.getBType(ctx.I_BNE(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitBLT(ctx: any) {
-      if (_.isFunction(this.blt)) {
+      if (isFunction(this.blt)) {
         this.blt(this.getBType(ctx.I_BLT(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitBGE(ctx: any) {
-      if (_.isFunction(this.bge)) {
+      if (isFunction(this.bge)) {
         this.bge(this.getBType(ctx.I_BGE(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitBLTU(ctx: any) {
-      if (_.isFunction(this.bltu)) {
+      if (isFunction(this.bltu)) {
         this.bltu(this.getBType(ctx.I_BLTU(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitBGEU(ctx: any) {
-      if (_.isFunction(this.bgeu)) {
+      if (isFunction(this.bgeu)) {
         this.bgeu(this.getBType(ctx.I_BGEU(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitLB(ctx: any) {
-      if (_.isFunction(this.lb)) {
+      if (isFunction(this.lb)) {
         this.lb(this.getIType(ctx.I_LB(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitLH(ctx: any) {
-      if (_.isFunction(this.lh)) {
+      if (isFunction(this.lh)) {
         this.lh(this.getIType(ctx.I_LH(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitLW(ctx: any) {
-      if (_.isFunction(this.lw)) {
+      if (isFunction(this.lw)) {
         this.lw(this.getIType(ctx.I_LW(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitLBU(ctx: any) {
-      if (_.isFunction(this.lbu)) {
+      if (isFunction(this.lbu)) {
         this.lbu(this.getIType(ctx.I_LBU(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitLHU(ctx: any) {
-      if (_.isFunction(this.lhu)) {
+      if (isFunction(this.lhu)) {
         this.lhu(this.getIType(ctx.I_LHU(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitSB(ctx: any) {
-      if (_.isFunction(this.sb)) {
+      if (isFunction(this.sb)) {
         this.sb(this.getSType(ctx.I_SB(), ctx.XREG(1), ctx.XREG(0)));
       }
     }
 
     /** {@inheritdoc} */
     exitSH(ctx: any) {
-      if (_.isFunction(this.sh)) {
+      if (isFunction(this.sh)) {
         this.sh(this.getSType(ctx.I_SH(), ctx.XREG(1), ctx.XREG(0)));
       }
     }
 
     /** {@inheritdoc} */
     exitSW(ctx: any) {
-      if (_.isFunction(this.sw)) {
+      if (isFunction(this.sw)) {
         this.sw(this.getSType(ctx.I_SW(), ctx.XREG(1), ctx.XREG(0)));
       }
     }
 
     /** {@inheritdoc} */
     exitADDI(ctx: any) {
-      if (_.isFunction(this.addi)) {
+      if (isFunction(this.addi)) {
         this.addi(this.getIType(ctx.I_ADDI(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitSLTI(ctx: any) {
-      if (_.isFunction(this.slti)) {
+      if (isFunction(this.slti)) {
         this.slti(this.getIType(ctx.I_SLTI(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitSLTIU(ctx: any) {
-      if (_.isFunction(this.sltiu)) {
+      if (isFunction(this.sltiu)) {
         this.sltiu(this.getIType(ctx.I_SLTIU(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitXORI(ctx: any) {
-      if (_.isFunction(this.xori)) {
+      if (isFunction(this.xori)) {
         this.xori(this.getIType(ctx.I_XORI(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitORI(ctx: any) {
-      if (_.isFunction(this.ori)) {
+      if (isFunction(this.ori)) {
         this.ori(this.getIType(ctx.I_ORI(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitANDI(ctx: any) {
-      if (_.isFunction(this.andi)) {
+      if (isFunction(this.andi)) {
         this.andi(this.getIType(ctx.I_ANDI(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitSLLI(ctx: any) {
-      if (_.isFunction(this.slli)) {
+      if (isFunction(this.slli)) {
         this.slli(this.getIType(ctx.I_SLLI(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitSRLI(ctx: any) {
-      if (_.isFunction(this.srli)) {
+      if (isFunction(this.srli)) {
         this.srli(this.getIType(ctx.I_SRLI(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitSRAI(ctx: any) {
-      if (_.isFunction(this.srai)) {
+      if (isFunction(this.srai)) {
         this.srai(this.getIType(ctx.I_SRAI(), ctx.XREG(0), ctx.XREG(1)));
       }
     }
 
     /** {@inheritdoc} */
     exitADD(ctx: any) {
-      if (_.isFunction(this.add)) {
+      if (isFunction(this.add)) {
         this.add(this.getRType(ctx.I_ADD(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitSUB(ctx: any) {
-      if (_.isFunction(this.sub)) {
+      if (isFunction(this.sub)) {
         this.sub(this.getRType(ctx.I_SUB(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitSLL(ctx: any) {
-      if (_.isFunction(this.sll)) {
+      if (isFunction(this.sll)) {
         this.sll(this.getRType(ctx.I_SLL(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitSLT(ctx: any) {
-      if (_.isFunction(this.slt)) {
+      if (isFunction(this.slt)) {
         this.slt(this.getRType(ctx.I_SLT(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitSLTU(ctx: any) {
-      if (_.isFunction(this.sltu)) {
+      if (isFunction(this.sltu)) {
         this.sltu(this.getRType(ctx.I_SLTU(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitXOR(ctx: any) {
-      if (_.isFunction(this.xor)) {
+      if (isFunction(this.xor)) {
         this.xor(this.getRType(ctx.I_XOR(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitSRL(ctx: any) {
-      if (_.isFunction(this.srl)) {
+      if (isFunction(this.srl)) {
         this.srl(this.getRType(ctx.I_SRL(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitSRA(ctx: any) {
-      if (_.isFunction(this.sra)) {
+      if (isFunction(this.sra)) {
         this.sra(this.getRType(ctx.I_SRA(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitOR(ctx: any) {
-      if (_.isFunction(this.or)) {
+      if (isFunction(this.or)) {
         this.or(this.getRType(ctx.I_OR(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitAND(ctx: any) {
-      if (_.isFunction(this.and)) {
+      if (isFunction(this.and)) {
         this.and(this.getRType(ctx.I_AND(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitFENCE(ctx: any) {
-      if (_.isFunction(this.fence)) {
+      if (isFunction(this.fence)) {
         this.addNumber('0');
         this.fence(this.getIType(ctx.I_FENCE(), { symbol: { text: 'x0' } }, { symbol: { text: 'x0' } }));
       }
@@ -283,7 +283,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitECALL(ctx: any) {
-      if (_.isFunction(this.ecall)) {
+      if (isFunction(this.ecall)) {
         this.addNumber('0');
         this.ecall(this.getIType(ctx.I_ECALL(), { symbol: { text: 'x0' } }, { symbol: { text: 'x0' } }));
       }
@@ -291,7 +291,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitEBREAK(ctx: any) {
-      if (_.isFunction(this.ebreak)) {
+      if (isFunction(this.ebreak)) {
         this.addNumber('1');
         this.ebreak(this.getIType(ctx.I_EBREAK(), { symbol: { text: 'x0' } }, { symbol: { text: 'x0' } }));
       }
@@ -301,63 +301,63 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitLAPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.la)) {
+      if (this.options.pseudos && isFunction(this.la)) {
         this.la(this.getLoadPseudo(ctx.I_LA(), ctx.XREG(), ctx.XREG(), ctx.ID(), 'addi'));
       }
     }
 
     /** {@inheritdoc} */
     exitLLAPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.lla)) {
+      if (this.options.pseudos && isFunction(this.lla)) {
         this.lla(this.getLoadPseudo(ctx.I_LLA(), ctx.XREG(), ctx.XREG(), ctx.ID(), 'addi'));
       }
     }
 
     /** {@inheritdoc} */
     exitLBPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.lbg)) {
+      if (this.options.pseudos && isFunction(this.lbg)) {
         this.lbg(this.getLoadPseudo(ctx.I_LB(), ctx.XREG(), ctx.XREG(), ctx.ID(), 'lb'));
       }
     }
 
     /** {@inheritdoc} */
     exitLHPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.lhg)) {
+      if (this.options.pseudos && isFunction(this.lhg)) {
         this.lhg(this.getLoadPseudo(ctx.I_LH(), ctx.XREG(), ctx.XREG(), ctx.ID(), 'lh'));
       }
     }
 
     /** {@inheritdoc} */
     exitLWPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.lwg)) {
+      if (this.options.pseudos && isFunction(this.lwg)) {
         this.lwg(this.getLoadPseudo(ctx.I_LW(), ctx.XREG(), ctx.XREG(), ctx.ID(), 'lw'));
       }
     }
 
     /** {@inheritdoc} */
     exitSBPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.sbg)) {
+      if (this.options.pseudos && isFunction(this.sbg)) {
         this.sbg(this.getStorePseudo(ctx.I_SB(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitSHPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.shg)) {
+      if (this.options.pseudos && isFunction(this.shg)) {
         this.shg(this.getStorePseudo(ctx.I_SH(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitSWPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.swg)) {
+      if (this.options.pseudos && isFunction(this.swg)) {
         this.swg(this.getStorePseudo(ctx.I_SW(), ctx.XREG(0), ctx.XREG(1), ctx.ID()));
       }
     }
 
     /** {@inheritdoc} */
     exitNOPPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.nop)) {
+      if (this.options.pseudos && isFunction(this.nop)) {
         const mnemonic = ctx.I_NOP();
         const tal = {
           ...mnemonic,
@@ -371,14 +371,14 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitLIPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.li)) {
+      if (this.options.pseudos && isFunction(this.li)) {
         this.li(this.getLiPseudo(ctx.I_LI(), ctx.XREG()));
       }
     }
 
     /** {@inheritdoc} */
     exitMVPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.mv)) {
+      if (this.options.pseudos && isFunction(this.mv)) {
         const mnemonic = ctx.I_MV();
         const tal = {
           ...mnemonic,
@@ -391,7 +391,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitNOTPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.not)) {
+      if (this.options.pseudos && isFunction(this.not)) {
         const mnemonic = ctx.I_NOT();
         const tal = {
           ...mnemonic,
@@ -404,7 +404,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitNEGPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.neg)) {
+      if (this.options.pseudos && isFunction(this.neg)) {
         const mnemonic = ctx.I_NEG();
         const tal = {
           ...mnemonic,
@@ -417,7 +417,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitSEQZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.seqz)) {
+      if (this.options.pseudos && isFunction(this.seqz)) {
         const mnemonic = ctx.I_SEQZ();
         const tal = {
           ...mnemonic,
@@ -430,7 +430,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitSNEZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.snez)) {
+      if (this.options.pseudos && isFunction(this.snez)) {
         const mnemonic = ctx.I_SNEZ();
         const tal = {
           ...mnemonic,
@@ -443,7 +443,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitSLTZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.sltz)) {
+      if (this.options.pseudos && isFunction(this.sltz)) {
         const mnemonic = ctx.I_SLTZ();
         const tal = {
           ...mnemonic,
@@ -456,7 +456,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitSGTZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.sgtz)) {
+      if (this.options.pseudos && isFunction(this.sgtz)) {
         const mnemonic = ctx.I_SGTZ();
         const tal = {
           ...mnemonic,
@@ -469,7 +469,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBEQZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.beqz)) {
+      if (this.options.pseudos && isFunction(this.beqz)) {
         const mnemonic = ctx.I_BEQZ();
         const tal = {
           ...mnemonic,
@@ -482,7 +482,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBNEZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.bnez)) {
+      if (this.options.pseudos && isFunction(this.bnez)) {
         const mnemonic = ctx.I_BNEZ();
         const tal = {
           ...mnemonic,
@@ -495,7 +495,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBLEZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.blez)) {
+      if (this.options.pseudos && isFunction(this.blez)) {
         const mnemonic = ctx.I_BLEZ();
         const tal = {
           ...mnemonic,
@@ -508,7 +508,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBGEZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.bgez)) {
+      if (this.options.pseudos && isFunction(this.bgez)) {
         const mnemonic = ctx.I_BGEZ();
         const tal = {
           ...mnemonic,
@@ -521,7 +521,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBLTZPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.bltz)) {
+      if (this.options.pseudos && isFunction(this.bltz)) {
         const mnemonic = ctx.I_BLTZ();
         const tal = {
           ...mnemonic,
@@ -534,7 +534,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBGTPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.bgt)) {
+      if (this.options.pseudos && isFunction(this.bgt)) {
         const mnemonic = ctx.I_BGT();
         const tal = {
           ...mnemonic,
@@ -546,7 +546,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBLEPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.ble)) {
+      if (this.options.pseudos && isFunction(this.ble)) {
         const mnemonic = ctx.I_BLE();
         const tal = {
           ...mnemonic,
@@ -558,7 +558,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBGTUPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.bgtu)) {
+      if (this.options.pseudos && isFunction(this.bgtu)) {
         const mnemonic = ctx.I_BGTU();
         const tal = {
           ...mnemonic,
@@ -570,7 +570,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitBLEUPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.bleu)) {
+      if (this.options.pseudos && isFunction(this.bleu)) {
         const mnemonic = ctx.I_BLEU();
         const tal = {
           ...mnemonic,
@@ -582,7 +582,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitJPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.j)) {
+      if (this.options.pseudos && isFunction(this.j)) {
         const mnemonic = ctx.I_J();
         const tal = {
           ...mnemonic,
@@ -595,7 +595,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitJALPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.jalp)) {
+      if (this.options.pseudos && isFunction(this.jalp)) {
         const mnemonic = ctx.I_JAL();
         const ra = { symbol: { text: 'x1' } };
         this.jalp(this.getPseudo(mnemonic, [this.getJType(mnemonic, ra, ctx.ID())]));
@@ -604,7 +604,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitJRPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.jr)) {
+      if (this.options.pseudos && isFunction(this.jr)) {
         const mnemonic = ctx.I_JR();
         const tal = {
           ...mnemonic,
@@ -618,7 +618,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitJALRPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.jalrp)) {
+      if (this.options.pseudos && isFunction(this.jalrp)) {
         const mnemonic = ctx.I_JALR();
         const ra = { symbol: { text: 'x1' } };
         this.addNumber('0');
@@ -628,7 +628,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitRETPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.ret)) {
+      if (this.options.pseudos && isFunction(this.ret)) {
         const mnemonic = ctx.I_RET();
         const tal = {
           ...mnemonic,
@@ -643,7 +643,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitCALLPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.call)) {
+      if (this.options.pseudos && isFunction(this.call)) {
         const ra = { symbol: { text: 'x1' } };
         this.call(this.getLoadPseudo(ctx.I_CALL(), ra, ra, ctx.ID(), 'jalr'));
       }
@@ -651,7 +651,7 @@ export const I = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitTAILPSEUDO(ctx: any) {
-      if (this.options.pseudos && _.isFunction(this.tail)) {
+      if (this.options.pseudos && isFunction(this.tail)) {
         const t1 = { symbol: { text: 'x6' } };
         const zero = { symbol: { text: 'x0' } };
         this.tail(this.getLoadPseudo(ctx.I_TAIL(), zero, t1, ctx.ID(), 'jalr'));

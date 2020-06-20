@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { isFunction } from 'lodash';
 
 /**
  * RV32M Mixing.
@@ -16,56 +16,56 @@ export const M = (superclass: any) =>
 
     /** {@inheritdoc} */
     exitMUL(ctx: any) {
-      if (this.options.extensions.m && _.isFunction(this.mul)) {
+      if (this.options.extensions.m && isFunction(this.mul)) {
         this.mul(this.getRType(ctx.I_MUL(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitMULH(ctx: any) {
-      if (this.options.extensions.m && _.isFunction(this.mulh)) {
+      if (this.options.extensions.m && isFunction(this.mulh)) {
         this.mulh(this.getRType(ctx.I_MULH(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitMULHSU(ctx: any) {
-      if (this.options.extensions.m && _.isFunction(this.mulhsu)) {
+      if (this.options.extensions.m && isFunction(this.mulhsu)) {
         this.mulhsu(this.getRType(ctx.I_MULHSU(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitMULHU(ctx: any) {
-      if (this.options.extensions.m && _.isFunction(this.mulhu)) {
+      if (this.options.extensions.m && isFunction(this.mulhu)) {
         this.mulhu(this.getRType(ctx.I_MULHU(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitDIV(ctx: any) {
-      if (this.options.extensions.m && _.isFunction(this.div)) {
+      if (this.options.extensions.m && isFunction(this.div)) {
         this.div(this.getRType(ctx.I_DIV(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitDIVU(ctx: any) {
-      if (this.options.extensions.m && _.isFunction(this.divu)) {
+      if (this.options.extensions.m && isFunction(this.divu)) {
         this.divu(this.getRType(ctx.I_DIVU(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitREM(ctx: any) {
-      if (this.options.extensions.m && _.isFunction(this.rem)) {
+      if (this.options.extensions.m && isFunction(this.rem)) {
         this.rem(this.getRType(ctx.I_REM(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
 
     /** {@inheritdoc} */
     exitREMU(ctx: any) {
-      if (this.options.extensions.m && _.isFunction(this.remu)) {
+      if (this.options.extensions.m && isFunction(this.remu)) {
         this.remu(this.getRType(ctx.I_REMU(), ctx.XREG(0), ctx.XREG(1), ctx.XREG(2)));
       }
     }
