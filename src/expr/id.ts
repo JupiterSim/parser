@@ -1,8 +1,7 @@
-import { DebugInfo } from '../debug';
-import { SymbolTable } from '../table';
 import { Relocation } from '../relocation';
 import { isUndefined, indexOf } from 'lodash';
 import { signExtend } from '@jupitersim/helpers';
+import { DebugInfo, SymbolTable } from '../types';
 import { Expression, ExpressionError } from './expr';
 
 /**

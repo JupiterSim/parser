@@ -1,4 +1,4 @@
-import { DebugInfo } from '../debug';
+import { DebugInfo } from '../types';
 import { atoi } from '@jupitersim/helpers';
 import { Expression, ExpressionError } from './expr';
 

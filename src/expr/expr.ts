@@ -1,4 +1,4 @@
-import { DebugInfo } from '../debug';
+import { DebugInfo } from '../types';
 
 /**
  * Expression error.

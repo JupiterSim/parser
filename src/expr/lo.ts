@@ -1,5 +1,5 @@
 import { Expression } from './expr';
-import { DebugInfo } from '../debug';
+import { DebugInfo } from '../types';
 import { signExtend } from '@jupitersim/helpers';
 
 /**
