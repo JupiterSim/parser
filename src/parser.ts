@@ -5,20 +5,22 @@ import { ParseError } from './error';
 import { SymbolTable } from './table';
 import { ParserOptions } from './options';
 import { Relocation } from './relocation';
-import { M, I, Expr, Lbl } from './listeners';
+import { M, I, Expr, Lbl, Directives } from './listeners';
 import { Expression, Id, Lo, Hi, Constant } from './expr';
 import { getRegisterNumber, between } from '@jupitersim/helpers';
 import { RISCVListener, RISCVLexer, RISCVParser } from './syntax';
 import { ParseTreeWalker, ParseTreeListener } from 'antlr4/tree/Tree';
 import { InputStream, CommonTokenStream, Lexer, Parser } from 'antlr4';
-import { RType, IType, SType, BType, UType, JType, R4Type, Pseudo, Label } from './formats';
+import { RType, IType, SType, BType, UType, JType, R4Type, Pseudo, Label, Directive } from './formats';
 
 /**
  * RISC-V RV32G parser.
  */
-export abstract class RV32G extends M(I(Expr(Lbl(RISCVListener)))) {
-  /** RISC-V assembly file. */
-  readonly file: ASMFile;
+export abstract class RV32G extends M(I(Expr(Directives(Lbl(RISCVListener))))) {
+  /** RISC-V assembly file name. */
+  readonly filename: string;
+  /** RISC-V assembly file code. */
+  readonly code: string;
   /** Source code lines. */
   protected lines: string[];
   /** List of parse errors. */
@@ -32,6 +34,25 @@ export abstract class RV32G extends M(I(Expr(Lbl(RISCVListener)))) {
 
   /** label listener. */
   protected label?: (ctx: Label) => void;
+
+  /** .bss directive listener. */
+  protected bss?: (ctx: Directive) => void;
+  /** .data directive listener. */
+  protected data?: (ctx: Directive) => void;
+  /** .rodata directive listener */
+  protected rodata?: (ctx: Directive) => void;
+  /** .text directive listener. */
+  protected text?: (ctx: Directive) => void;
+  /** .globl directive listener. */
+  protected globl?: (ctx: Directive) => void;
+  /** .align directive listener. */
+  protected align?: (ctx: Directive) => void;
+  /** .balign directive listener. */
+  protected balign?: (ctx: Directive) => void;
+  /** .file directive listener. */
+  protected file?: (ctx: Directive) => void;
+  /** .equ directive listener. */
+  protected equ?: (ctx: Directive) => void;
 
   /** lui instruction listener. */
   protected lui?: (ctx: UType) => void;
@@ -204,7 +225,8 @@ export abstract class RV32G extends M(I(Expr(Lbl(RISCVListener)))) {
    */
   constructor(file: ASMFile, st: SymbolTable, options: ParserOptions) {
     super();
-    this.file = file;
+    this.filename = file.name;
+    this.code = file.code;
     this.st = st;
     this.options = options;
     this.errors = [];
@@ -217,7 +239,7 @@ export abstract class RV32G extends M(I(Expr(Lbl(RISCVListener)))) {
    */
   parse(): void {
     try {
-      const lexer = (new RISCVLexer(new InputStream(this.file.code)) as unknown) as Lexer;
+      const lexer = (new RISCVLexer(new InputStream(this.code)) as unknown) as Lexer;
       const parser = (new RISCVParser(new CommonTokenStream(lexer)) as unknown) as Parser;
       ParseTreeWalker.DEFAULT.walk((this as unknown) as ParseTreeListener, (parser as any).prog());
     } catch (error) {}
@@ -244,7 +266,7 @@ export abstract class RV32G extends M(I(Expr(Lbl(RISCVListener)))) {
       const [source, indicator] = this.getSourceAndIndicator(line, column);
       // update error
       this.errors.push({
-        filename: this.file.name,
+        filename: this.filename,
         line,
         column,
         message,
@@ -501,7 +523,7 @@ export abstract class RV32G extends M(I(Expr(Lbl(RISCVListener)))) {
     const column: number = (info.symbol ? info.symbol.column : info.column) + 1;
     const [source, indicator] = this.getSourceAndIndicator(line, column);
     return {
-      filename: this.file.name,
+      filename: this.filename,
       line,
       column,
       source,

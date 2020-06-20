@@ -65,9 +65,9 @@ export type BType = SType;
 /** RISC-V U format. */
 export interface UType extends Format {
   /** Destination register. */
-  rd: number;
+  readonly rd: number;
   /** Immediate expression. */
-  expr: Expression | undefined;
+  readonly expr: Expression | undefined;
 }
 
 /** RISC-V J format. */
@@ -76,13 +76,29 @@ export type JType = UType;
 /** RISC-V pseudo */
 export interface Pseudo extends Format {
   /** List of true assemble language instructions. */
-  tal: Array<R4Type | RType | IType | SType | BType | UType | JType>;
+  readonly tal: Array<R4Type | RType | IType | SType | BType | UType | JType>;
 }
 
 /** RISC-V label */
 export interface Label {
   /** Debug information. */
-  debugInfo: DebugInfo;
+  readonly debugInfo: DebugInfo;
   /** Label name */
-  name: string;
+  readonly name: string;
+}
+
+/** Assembler section. */
+export interface Directive {
+  /** Debug information. */
+  readonly debugInfo: DebugInfo;
+  /** Assembler section. */
+  readonly directive: string;
+  /** Assembler expression. */
+  readonly expr?: Expression;
+  /** Equ id */
+  readonly id?: string;
+  /** File name */
+  readonly file?: string;
+  /** symbols */
+  readonly labels?: Label[];
 }
