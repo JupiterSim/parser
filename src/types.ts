@@ -179,7 +179,7 @@ export interface Pseudo extends Format {
 export interface Label {
   /** Debug information. */
   readonly debugInfo: DebugInfo;
-  /** Label name */
+  /** Label name. */
   readonly name: string;
 }
 
@@ -191,10 +191,14 @@ export interface Directive {
   readonly directive: string;
   /** Assembler expression. */
   readonly expr?: Expression;
-  /** Equ id */
+  /** Equ id. */
   readonly id?: string;
-  /** File name */
+  /** File name. */
   readonly file?: string;
-  /** symbols */
+  /** symbols. */
   readonly labels?: Label[];
+  /** String bytes. */
+  readonly bytes?: string[];
+  /** Expression list. */
+  readonly data?: Expression[];
 }

@@ -64,6 +64,20 @@ export abstract class RV32G extends M(I(Expr(Directives(Lbl(RISCVListener))))) {
   protected file?: (ctx: Directive) => void;
   /** .equ directive listener. */
   protected equ?: (ctx: Directive) => void;
+  /** .byte directive listener. */
+  protected byte?: (ctx: Directive) => void;
+  /** .half directive listener. */
+  protected half?: (ctx: Directive) => void;
+  /** .word directive listener. */
+  protected word?: (ctx: Directive) => void;
+  /** .float directive listener. */
+  protected float?: (ctx: Directive) => void;
+  /** .ascii directive listener. */
+  protected ascii?: (ctx: Directive) => void;
+  /** .asciiz directive listener. */
+  protected asciiz?: (ctx: Directive) => void;
+  /** .zero directive listener. */
+  protected zero?: (ctx: Directive) => void;
 
   /** lui instruction listener. */
   protected lui?: (ctx: UType) => void;

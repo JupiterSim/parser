@@ -1,6 +1,6 @@
 import { Label } from '../types';
-import { isFunction } from 'lodash';
-import { Constant } from '../expr/';
+import { isFunction, split } from 'lodash';
+import { Expression, Constant } from '../expr/';
 import { cleanEscapes } from '@jupitersim/helpers';
 
 /**
@@ -98,6 +98,97 @@ export const Directives = (superclass: any) =>
           directive: ctx.d.text,
           id: ctx.ID().symbol.text,
           expr: this.stack.pop()
+        });
+      }
+    }
+
+    /** @inheritdoc */
+    exitBYTE(ctx: any) {
+      if (isFunction(this.byte)) {
+        const data: Expression[] = [];
+        ctx.expr().forEach(() => data.push(this.stack.pop()));
+        data.reverse();
+        this.byte({
+          debugInfo: this.getDebugInfo(ctx.d),
+          directive: ctx.d.text,
+          data
+        });
+      }
+    }
+
+    /** @inheritdoc */
+    exitHALF(ctx: any) {
+      if (isFunction(this.half)) {
+        const data: Expression[] = [];
+        ctx.expr().forEach(() => data.push(this.stack.pop()));
+        data.reverse();
+        this.half({
+          debugInfo: this.getDebugInfo(ctx.d),
+          directive: ctx.d.text,
+          data
+        });
+      }
+    }
+
+    /** @inheritdoc */
+    exitWORD(ctx: any) {
+      if (isFunction(this.word)) {
+        const data: Expression[] = [];
+        ctx.expr().forEach(() => data.push(this.stack.pop()));
+        data.reverse();
+        this.word({
+          debugInfo: this.getDebugInfo(ctx.d),
+          directive: ctx.d.text,
+          data
+        });
+      }
+    }
+
+    /** @inheritdoc */
+    exitFLOAT(ctx: any) {
+      if (isFunction(this.float)) {
+        const data: Expression[] = [];
+        ctx.fexpr().forEach(() => data.push(this.stack.pop()));
+        data.reverse();
+        this.float({
+          debugInfo: this.getDebugInfo(ctx.d),
+          directive: ctx.d.text,
+          data
+        });
+      }
+    }
+
+    /** @inheritdoc */
+    exitASCII(ctx: any) {
+      if (isFunction(this.ascii)) {
+        const str = ctx.STRING().symbol.text;
+        this.ascii({
+          debugInfo: this.getDebugInfo(ctx.d),
+          directive: ctx.d.text,
+          bytes: split(cleanEscapes(str.substring(1, str.length - 1)), '')
+        });
+      }
+    }
+
+    /** @inheritdoc */
+    exitASCIIZ(ctx: any) {
+      if (isFunction(this.asciiz)) {
+        const str = ctx.STRING().symbol.text;
+        this.asciiz({
+          debugInfo: this.getDebugInfo(ctx.d),
+          directive: ctx.d.text,
+          bytes: split(cleanEscapes(str.substring(1, str.length - 1)), '')
+        });
+      }
+    }
+
+    /** @inheritdoc */
+    exitZERO(ctx: any) {
+      if (isFunction(this.zero)) {
+        this.zero({
+          debugInfo: this.getDebugInfo(ctx.d),
+          directive: ctx.d.text,
+          expr: new Constant(this.getDebugInfo(ctx.i), ctx.i.text)
         });
       }
     }
