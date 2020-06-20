@@ -1,5 +1,101 @@
-import { DebugInfo } from './debug';
+import { Segment } from './segment';
 import { Expression } from './expr';
+
+/**
+ * RISC-V assembly file.
+ */
+export interface ASMFile {
+  /** File name. */
+  readonly name: string;
+  /** File assembly code. */
+  readonly code: string;
+}
+
+/**
+ * RISC-V parser options.
+ */
+export interface ParserOptions {
+  /** Allow pseudoinstructions. */
+  pseudos: boolean;
+  /** Enabled extensions. */
+  extensions: {
+    /** RV32M extension. */
+    m: boolean;
+    /** RV32A extension. */
+    a: boolean;
+    /** RV32F extension. */
+    f: boolean;
+    /** RV32D extension. */
+    d: boolean;
+    /** RV32Zicsr extension. */
+    zicsr: boolean;
+    /** RV32Zifencei extension. */
+    zifencei: boolean;
+  };
+}
+
+/**
+ * Assembler debug information.
+ */
+export interface DebugInfo {
+  /** Source file name. */
+  readonly filename: string;
+  /** Source line number. */
+  readonly line: number;
+  /** Source column number. */
+  readonly column: number;
+  /** Source code line. */
+  readonly source: string;
+  /** Error indicator. */
+  readonly indicator: number;
+}
+
+/**
+ * Parser error.
+ */
+export interface ParseError extends DebugInfo {
+  /** Error message. */
+  readonly message: string;
+}
+
+/**
+ * Assembler label.
+ */
+export interface Sym {
+  /** Symbol segment. */
+  readonly segment: Segment;
+  /** Symbol debug information. */
+  readonly debugInfo: DebugInfo;
+  /** Symbol address. */
+  address: number;
+}
+
+/**
+ * Assembler symbol table.
+ */
+export interface SymbolTable {
+  /** Globals symbols. */
+  readonly globals: {
+    /** Symbol name. */
+    [symbol: string]: Sym;
+  };
+  /** Local symbols. */
+  readonly locals: {
+    /** File name where the local symbol is. */
+    [filename: string]: {
+      /** Symbol name. */
+      [symbol: string]: Sym;
+    };
+  };
+  /** Local expressions. */
+  readonly expr: {
+    /** File name where the local symbol is. */
+    [filename: string]: {
+      /** Symbol name. */
+      [symbol: string]: Expression;
+    };
+  };
+}
 
 /**
  * RISC-V Format.

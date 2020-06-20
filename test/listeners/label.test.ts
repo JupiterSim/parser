@@ -1,6 +1,6 @@
 import chai from 'chai';
 import { Test } from './utils';
-import { Label } from '../../src/formats';
+import { Label } from '../../src';
 
 describe('Labels', () => {
   class LblTest extends Test {

@@ -1,5 +1,5 @@
 import { Test } from './utils';
-import { RType } from '../../src/formats';
+import { RType } from '../../src';
 
 class RV32M extends Test {
   constructor() {

@@ -2,7 +2,7 @@ import chai from 'chai';
 import { RV32G } from '../../src/parser';
 import { Constant } from '../../src/expr';
 import { Segment } from '../../src/segment';
-import { UType, JType, SType, BType, IType, RType, R4Type, Pseudo } from '../../src/formats';
+import { UType, JType, SType, BType, IType, RType, R4Type, Pseudo } from '../../src';
 
 const options = {
   pseudos: true,

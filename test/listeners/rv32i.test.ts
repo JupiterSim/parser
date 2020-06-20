@@ -1,7 +1,7 @@
 import chai from 'chai';
 import { Test } from './utils';
 import sinon, { SinonSpy } from 'sinon';
-import { RType, UType, JType, IType, BType, SType, Pseudo } from '../../src/formats';
+import { RType, UType, JType, IType, BType, SType, Pseudo } from '../../src';
 
 const code = `
   lui a0, %hi(bar)

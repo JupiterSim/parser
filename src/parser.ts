@@ -1,8 +1,3 @@
-import { ASMFile } from './file';
-import { DebugInfo } from './debug';
-import { ParseError } from './error';
-import { SymbolTable } from './table';
-import { ParserOptions } from './options';
 import { Relocation } from './relocation';
 import { isUndefined, sortBy, find } from 'lodash';
 import { M, I, Expr, Lbl, Directives } from './listeners';
@@ -11,7 +6,23 @@ import { getRegisterNumber, between } from '@jupitersim/helpers';
 import { RISCVListener, RISCVLexer, RISCVParser } from './syntax';
 import { ParseTreeWalker, ParseTreeListener } from 'antlr4/tree/Tree';
 import { InputStream, CommonTokenStream, Lexer, Parser } from 'antlr4';
-import { RType, IType, SType, BType, UType, JType, R4Type, Pseudo, Label, Directive } from './formats';
+import {
+  ASMFile,
+  DebugInfo,
+  ParseError,
+  SymbolTable,
+  ParserOptions,
+  RType,
+  IType,
+  SType,
+  BType,
+  UType,
+  JType,
+  R4Type,
+  Pseudo,
+  Label,
+  Directive
+} from './types';
 
 /**
  * RISC-V RV32G parser.
