@@ -1,6 +1,6 @@
 import { Relocation } from './relocation';
 import { isUndefined, sortBy, find } from 'lodash';
-import { M, I, Expr, Lbl, Directives } from './listeners';
+import { I, M, A, Expr, Lbl, Directives } from './listeners';
 import { Expression, Id, Lo, Hi, Constant } from './expr';
 import { getRegisterNumber, between } from '@jupitersim/helpers';
 import { RISCVListener, RISCVLexer, RISCVParser } from './syntax';
@@ -27,7 +27,7 @@ import {
 /**
  * RISC-V RV32G parser.
  */
-export abstract class RV32G extends M(I(Expr(Directives(Lbl(RISCVListener))))) {
+export abstract class RV32G extends A(M(I(Expr(Directives(Lbl(RISCVListener)))))) {
   /** RISC-V assembly file name. */
   readonly filename: string;
   /** RISC-V assembly file code. */
@@ -242,6 +242,29 @@ export abstract class RV32G extends M(I(Expr(Directives(Lbl(RISCVListener))))) {
   protected rem?: (ctx: RType) => void;
   /** remu instruction listener. */
   protected remu?: (ctx: RType) => void;
+
+  /** lrw instruction listener. */
+  protected lrw?: (ctx: RType) => void;
+  /** scw instruction listener. */
+  protected scw?: (ctx: RType) => void;
+  /** amoswapw instruction listener. */
+  protected amoswapw?: (ctx: RType) => void;
+  /** amoaddw instruction listener. */
+  protected amoaddw?: (ctx: RType) => void;
+  /** amoxorw instruction listener. */
+  protected amoxorw?: (ctx: RType) => void;
+  /** amoandw instruction listener. */
+  protected amoandw?: (ctx: RType) => void;
+  /** amoorw instruction listener. */
+  protected amoorw?: (ctx: RType) => void;
+  /** amominw instruction listener. */
+  protected amominw?: (ctx: RType) => void;
+  /** amomaxw instruction listener. */
+  protected amomaxw?: (ctx: RType) => void;
+  /** amominuw instruction listener. */
+  protected amominuw?: (ctx: RType) => void;
+  /** amomaxuw instruction listener. */
+  protected amomaxuw?: (ctx: RType) => void;
 
   /**
    * Creates a new RISC-V RV32G parser.
