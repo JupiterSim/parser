@@ -5,7 +5,7 @@ import { RISCVListener, RISCVLexer, RISCVParser } from './syntax';
 import { ParseTreeWalker, ParseTreeListener } from 'antlr4/tree/Tree';
 import { InputStream, CommonTokenStream, Lexer, Parser } from 'antlr4';
 import { getRegisterNumber, between, atoi } from '@jupitersim/helpers';
-import { I, M, A, Zifencei, Zicsr, Expr, Lbl, Directives } from './listeners';
+import { I, M, A, F, Zifencei, Zicsr, Expr, Lbl, Directives } from './listeners';
 import {
   ASMFile,
   DebugInfo,
@@ -27,7 +27,7 @@ import {
 /**
  * RISC-V RV32G parser.
  */
-export abstract class RV32G extends Zifencei(Zicsr(A(M(I(Expr(Directives(Lbl(RISCVListener)))))))) {
+export abstract class RV32G extends Zifencei(Zicsr(F(A(M(I(Expr(Directives(Lbl(RISCVListener))))))))) {
   /** RISC-V assembly file name. */
   readonly filename: string;
   /** RISC-V assembly file code. */
@@ -265,6 +265,73 @@ export abstract class RV32G extends Zifencei(Zicsr(A(M(I(Expr(Directives(Lbl(RIS
   protected amominuw?: (ctx: RType) => void;
   /** amomaxuw instruction listener. */
   protected amomaxuw?: (ctx: RType) => void;
+
+  /** flw instruction listener. */
+  protected flw?: (ctx: IType) => void;
+  /** fsw instruction listener. */
+  protected fsw?: (ctx: SType) => void;
+  /** fmadd.s instruction listener. */
+  protected fmadds?: (ctx: R4Type) => void;
+  /** fmsub.s instruction listener. */
+  protected fmsubs?: (ctx: R4Type) => void;
+  /** fnmsub.s instruction listener. */
+  protected fnmsubs?: (ctx: R4Type) => void;
+  /** fnmadd.s instruction listener. */
+  protected fnmadds?: (ctx: R4Type) => void;
+  /** fadd.s instruction listener. */
+  protected fadds?: (ctx: RType) => void;
+  /** fsub.s instruction listener. */
+  protected fsubs?: (ctx: RType) => void;
+  /** fmul.s instruction listener. */
+  protected fmuls?: (ctx: RType) => void;
+  /** fdiv.s instruction listener. */
+  protected fdivs?: (ctx: RType) => void;
+  /** fsqrt.s instruction listener. */
+  protected fsqrts?: (ctx: RType) => void;
+  /** fsgnj.s instruction listener. */
+  protected fsgnjs?: (ctx: RType) => void;
+  /** fsgnjn.s instruction listener. */
+  protected fsgnjns?: (ctx: RType) => void;
+  /** fsgnjx.s instruction listener. */
+  protected fsgnjxs?: (ctx: RType) => void;
+  /** fmin.s instruction listener. */
+  protected fmins?: (ctx: RType) => void;
+  /** fmax.s instruction listener. */
+  protected fmaxs?: (ctx: RType) => void;
+  /** fcvt.w.s instruction listener. */
+  protected fcvtws?: (ctx: RType) => void;
+  /** fcvt.wu.s instruction listener. */
+  protected fcvtwus?: (ctx: RType) => void;
+  /** fmv.x.w instruction listener. */
+  protected fmvxw?: (ctx: RType) => void;
+  /** fmv.x.s instruction listener. */
+  protected fmvxs?: (ctx: RType) => void;
+  /** feqs instruction listener. */
+  protected feqs?: (ctx: RType) => void;
+  /** flt.s instruction listener. */
+  protected flts?: (ctx: RType) => void;
+  /** fle.s instruction listener. */
+  protected fles?: (ctx: RType) => void;
+  /** fclass.s instruction listener. */
+  protected fclasss?: (ctx: RType) => void;
+  /** fcvt.s.w instruction listener. */
+  protected fcvtsw?: (ctx: RType) => void;
+  /** fcvt.s.wu instruction listener. */
+  protected fcvtswu?: (ctx: RType) => void;
+  /** fmv.w.x instruction listener. */
+  protected fmvwx?: (ctx: RType) => void;
+  /** fmv.s.x instruction listener. */
+  protected fmvsx?: (ctx: RType) => void;
+  /** flw pseudo listener. */
+  protected flwg?: (ctx: Pseudo) => void;
+  /** fsw pseudo listener. */
+  protected fswg?: (ctx: Pseudo) => void;
+  /** fmv.s pseudo listener. */
+  protected fmvs?: (ctx: Pseudo) => void;
+  /** fabs.s pseudo listener. */
+  protected fabss?: (ctx: Pseudo) => void;
+  /** fneg.s pseudo listener. */
+  protected fnegs?: (ctx: Pseudo) => void;
 
   /** csrrw instruction listener. */
   protected csrrw?: (ctx: IType) => void;
