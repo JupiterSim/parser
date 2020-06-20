@@ -1,6 +1,6 @@
 import { Relocation } from './relocation';
 import { isUndefined, sortBy, find } from 'lodash';
-import { I, M, A, Expr, Lbl, Directives } from './listeners';
+import { I, M, A, Zifencei, Expr, Lbl, Directives } from './listeners';
 import { Expression, Id, Lo, Hi, Constant } from './expr';
 import { getRegisterNumber, between } from '@jupitersim/helpers';
 import { RISCVListener, RISCVLexer, RISCVParser } from './syntax';
@@ -27,7 +27,7 @@ import {
 /**
  * RISC-V RV32G parser.
  */
-export abstract class RV32G extends A(M(I(Expr(Directives(Lbl(RISCVListener)))))) {
+export abstract class RV32G extends Zifencei(A(M(I(Expr(Directives(Lbl(RISCVListener))))))) {
   /** RISC-V assembly file name. */
   readonly filename: string;
   /** RISC-V assembly file code. */
@@ -265,6 +265,9 @@ export abstract class RV32G extends A(M(I(Expr(Directives(Lbl(RISCVListener)))))
   protected amominuw?: (ctx: RType) => void;
   /** amomaxuw instruction listener. */
   protected amomaxuw?: (ctx: RType) => void;
+
+  /** fence.i instruction listener. */
+  protected fencei?: (ctx: IType) => void;
 
   /**
    * Creates a new RISC-V RV32G parser.
