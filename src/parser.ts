@@ -1,11 +1,11 @@
 import { Relocation } from './relocation';
 import { isUndefined, sortBy, find } from 'lodash';
-import { I, M, A, Zifencei, Expr, Lbl, Directives } from './listeners';
 import { Expression, Id, Lo, Hi, Constant } from './expr';
-import { getRegisterNumber, between } from '@jupitersim/helpers';
 import { RISCVListener, RISCVLexer, RISCVParser } from './syntax';
 import { ParseTreeWalker, ParseTreeListener } from 'antlr4/tree/Tree';
 import { InputStream, CommonTokenStream, Lexer, Parser } from 'antlr4';
+import { getRegisterNumber, between, atoi } from '@jupitersim/helpers';
+import { I, M, A, Zifencei, Zicsr, Expr, Lbl, Directives } from './listeners';
 import {
   ASMFile,
   DebugInfo,
@@ -27,7 +27,7 @@ import {
 /**
  * RISC-V RV32G parser.
  */
-export abstract class RV32G extends Zifencei(A(M(I(Expr(Directives(Lbl(RISCVListener))))))) {
+export abstract class RV32G extends Zifencei(Zicsr(A(M(I(Expr(Directives(Lbl(RISCVListener)))))))) {
   /** RISC-V assembly file name. */
   readonly filename: string;
   /** RISC-V assembly file code. */
@@ -266,6 +266,57 @@ export abstract class RV32G extends Zifencei(A(M(I(Expr(Directives(Lbl(RISCVList
   /** amomaxuw instruction listener. */
   protected amomaxuw?: (ctx: RType) => void;
 
+  /** csrrw instruction listener. */
+  protected csrrw?: (ctx: IType) => void;
+  /** csrrs instruction listener. */
+  protected csrrs?: (ctx: IType) => void;
+  /** csrrc instruction listener. */
+  protected csrrc?: (ctx: IType) => void;
+  /** csrrwi instruction listener. */
+  protected csrrwi?: (ctx: IType) => void;
+  /** csrrsi instruction listener. */
+  protected csrrsi?: (ctx: IType) => void;
+  /** csrrci instruction listener. */
+  protected csrrci?: (ctx: IType) => void;
+  /** rdinstreth pseudo listener. */
+  protected rdinstreth?: (ctx: Pseudo) => void;
+  /** rdinstret pseudo listener. */
+  protected rdinstret?: (ctx: Pseudo) => void;
+  /** rdcycleh pseudo listener. */
+  protected rdcycleh?: (ctx: Pseudo) => void;
+  /** rdcycle pseudo listener. */
+  protected rdcycle?: (ctx: Pseudo) => void;
+  /** rdtimeh pseudo listener. */
+  protected rdtimeh?: (ctx: Pseudo) => void;
+  /** rdtime pseudo listener. */
+  protected rdtime?: (ctx: Pseudo) => void;
+  /** csrr pseudo listener. */
+  protected csrr?: (ctx: Pseudo) => void;
+  /** csrw pseudo listener. */
+  protected csrw?: (ctx: Pseudo) => void;
+  /** csrs pseudo listener. */
+  protected csrs?: (ctx: Pseudo) => void;
+  /** csrc pseudo listener. */
+  protected csrc?: (ctx: Pseudo) => void;
+  /** csrwi pseudo listener. */
+  protected csrwi?: (ctx: Pseudo) => void;
+  /** csrsi pseudo listener. */
+  protected csrsi?: (ctx: Pseudo) => void;
+  /** csrci pseudo listener. */
+  protected csrci?: (ctx: Pseudo) => void;
+  /** frcsr pseudo listener. */
+  protected frcsr?: (ctx: Pseudo) => void;
+  /** fscsr pseudo listener. */
+  protected fscsr?: (ctx: Pseudo) => void;
+  /** frrm pseudo listener. */
+  protected frrm?: (ctx: Pseudo) => void;
+  /** fsrm pseudo listener. */
+  protected fsrm?: (ctx: Pseudo) => void;
+  /** frflags pseudo listener. */
+  protected frflags?: (ctx: Pseudo) => void;
+  /** fsflags pseudo listener. */
+  protected fsflags?: (ctx: Pseudo) => void;
+
   /** fence.i instruction listener. */
   protected fencei?: (ctx: IType) => void;
 
@@ -377,17 +428,18 @@ export abstract class RV32G extends Zifencei(A(M(I(Expr(Directives(Lbl(RISCVList
    * @param mnemonic - Instruction mnemonic terminal node.
    * @param rd       - Destination register terminal node.
    * @param rs1      - Source register 1 terminal node.
+   * @param uimm     - If source register 1 is an unsigned immediate.
    * @returns I-Type RISC-V instruction.
    */
   // eslint-disable-next-line
   // @ts-ignore
-  private getIType(mnemonic: any, rd: any, rs1: any): IType {
+  private getIType(mnemonic: any, rd: any, rs1: any, uimm: boolean = false): IType {
     return {
       debugInfo: this.getDebugInfo(mnemonic),
       mnemonic: mnemonic.symbol.text,
       rd: this.getRegisterNumber(rd),
-      rs1: this.getRegisterNumber(rs1),
-      expr: this.stack.pop()
+      rs1: uimm ? this.getUImm(rs1) : this.getRegisterNumber(rs1),
+      expr: this.stack.pop() as Expression
     };
   }
 
@@ -407,7 +459,7 @@ export abstract class RV32G extends Zifencei(A(M(I(Expr(Directives(Lbl(RISCVList
       mnemonic: mnemonic.symbol.text,
       rs1: this.getRegisterNumber(rs1),
       rs2: this.getRegisterNumber(rs2),
-      expr: this.stack.pop()
+      expr: this.stack.pop() as Expression
     };
   }
 
@@ -446,7 +498,7 @@ export abstract class RV32G extends Zifencei(A(M(I(Expr(Directives(Lbl(RISCVList
       debugInfo: this.getDebugInfo(mnemonic),
       mnemonic: mnemonic.symbol.text,
       rd: this.getRegisterNumber(rd),
-      expr: this.stack.pop()
+      expr: this.stack.pop() as Expression
     };
   }
 
@@ -583,25 +635,32 @@ export abstract class RV32G extends Zifencei(A(M(I(Expr(Directives(Lbl(RISCVList
   }
 
   /**
-   * Gets the register number that represents a register terminal node or token.
+   * Gets the register number that represents a register terminal node.
    *
-   * @param token - Register terminal node or token.
-   * @returns The register number that represents the given terminal node or token.
+   * @param token - Register terminal node.
+   * @returns The register number that represents the given terminal node.
    */
   private getRegisterNumber(token: any): number {
     if (!token) return 0;
     try {
-      if (token.symbol) {
-        return getRegisterNumber(token.symbol.text);
-      } else {
-        return getRegisterNumber(token.text);
-      }
+      return getRegisterNumber(token.symbol.text);
     } catch (error) {
-      if (token.symbol) {
-        this.addError(token.symbol.line, token.symbol.column + 1, error.message);
-      } else {
-        this.addError(token.line, token.column + 1, error.message);
-      }
+      this.addError(token.symbol.line, token.symbol.column + 1, error.message);
+    }
+    return 0;
+  }
+
+  /**
+   * Gets an unsigned immediate for some CSR instructions.
+   *
+   * @param token - Unsigned immediate terminal token.
+   */
+  private getUImm(token: any): number {
+    if (!token) return 0;
+    try {
+      return atoi(token.text);
+    } catch (error) {
+      this.addError(token.line, token.column + 1, error.message);
     }
     return 0;
   }

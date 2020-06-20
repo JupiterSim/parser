@@ -142,7 +142,7 @@ export interface IType extends Format {
   /** Source register 1. */
   readonly rs1: number;
   /** Immediate expression. */
-  readonly expr: Expression | undefined;
+  readonly expr: Expression;
 }
 
 /** RISC-V S format. */
@@ -152,7 +152,7 @@ export interface SType extends Format {
   /** Source register 2. */
   readonly rs2: number;
   /** Immediate expression. */
-  readonly expr: Expression | undefined;
+  readonly expr: Expression;
 }
 
 /** RISC-V B format. */
@@ -163,7 +163,7 @@ export interface UType extends Format {
   /** Destination register. */
   readonly rd: number;
   /** Immediate expression. */
-  readonly expr: Expression | undefined;
+  readonly expr: Expression;
 }
 
 /** RISC-V J format. */
