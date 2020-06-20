@@ -1,4 +1,4 @@
-import { Label } from '../formats';
+import { Label } from '../types';
 import { isFunction } from 'lodash';
 import { Constant } from '../expr/';
 import { cleanEscapes } from '@jupitersim/helpers';
