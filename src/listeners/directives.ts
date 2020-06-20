@@ -102,7 +102,7 @@ export const Directives = (superclass: any) =>
       }
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     exitBYTE(ctx: any) {
       if (isFunction(this.byte)) {
         const data: Expression[] = [];
@@ -116,7 +116,7 @@ export const Directives = (superclass: any) =>
       }
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     exitHALF(ctx: any) {
       if (isFunction(this.half)) {
         const data: Expression[] = [];
@@ -130,7 +130,7 @@ export const Directives = (superclass: any) =>
       }
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     exitWORD(ctx: any) {
       if (isFunction(this.word)) {
         const data: Expression[] = [];
@@ -144,7 +144,7 @@ export const Directives = (superclass: any) =>
       }
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     exitFLOAT(ctx: any) {
       if (isFunction(this.float)) {
         const data: Expression[] = [];
@@ -158,7 +158,7 @@ export const Directives = (superclass: any) =>
       }
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     exitASCII(ctx: any) {
       if (isFunction(this.ascii)) {
         const str = ctx.STRING().symbol.text;
@@ -170,7 +170,7 @@ export const Directives = (superclass: any) =>
       }
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     exitASCIIZ(ctx: any) {
       if (isFunction(this.asciiz)) {
         const str = ctx.STRING().symbol.text;
@@ -182,7 +182,7 @@ export const Directives = (superclass: any) =>
       }
     }
 
-    /** @inheritdoc */
+    /** {@inheritdoc} */
     exitZERO(ctx: any) {
       if (isFunction(this.zero)) {
         this.zero({
