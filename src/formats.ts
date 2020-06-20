@@ -78,3 +78,11 @@ export interface Pseudo extends Format {
   /** List of true assemble language instructions. */
   tal: Array<R4Type | RType | IType | SType | BType | UType | JType>;
 }
+
+/** RISC-V label */
+export interface Label {
+  /** Debug information. */
+  debugInfo: DebugInfo;
+  /** Label name */
+  name: string;
+}

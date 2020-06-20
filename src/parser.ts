@@ -3,20 +3,20 @@ import { ASMFile } from './file';
 import { DebugInfo } from './debug';
 import { ParseError } from './error';
 import { SymbolTable } from './table';
-import { M, I, Expr } from './listeners';
 import { ParserOptions } from './options';
 import { Relocation } from './relocation';
+import { M, I, Expr, Lbl } from './listeners';
 import { Expression, Id, Lo, Hi, Constant } from './expr';
 import { getRegisterNumber, between } from '@jupitersim/helpers';
 import { RISCVListener, RISCVLexer, RISCVParser } from './syntax';
 import { ParseTreeWalker, ParseTreeListener } from 'antlr4/tree/Tree';
 import { InputStream, CommonTokenStream, Lexer, Parser } from 'antlr4';
-import { RType, IType, SType, BType, UType, JType, R4Type, Pseudo } from './formats';
+import { RType, IType, SType, BType, UType, JType, R4Type, Pseudo, Label } from './formats';
 
 /**
  * RISC-V RV32G parser.
  */
-export abstract class RV32G extends M(I(Expr(RISCVListener))) {
+export abstract class RV32G extends M(I(Expr(Lbl(RISCVListener)))) {
   /** RISC-V assembly file. */
   readonly file: ASMFile;
   /** Source code lines. */
@@ -29,6 +29,9 @@ export abstract class RV32G extends M(I(Expr(RISCVListener))) {
   protected st: SymbolTable;
   /** Parser options. */
   protected options: ParserOptions;
+
+  /** label listener. */
+  protected label?: (ctx: Label) => void;
 
   /** lui instruction listener. */
   protected lui?: (ctx: UType) => void;
@@ -217,9 +220,7 @@ export abstract class RV32G extends M(I(Expr(RISCVListener))) {
       const lexer = (new RISCVLexer(new InputStream(this.file.code)) as unknown) as Lexer;
       const parser = (new RISCVParser(new CommonTokenStream(lexer)) as unknown) as Parser;
       ParseTreeWalker.DEFAULT.walk((this as unknown) as ParseTreeListener, (parser as any).prog());
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   /**
