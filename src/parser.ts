@@ -5,7 +5,7 @@ import { RISCVListener, RISCVLexer, RISCVParser } from './syntax';
 import { ParseTreeWalker, ParseTreeListener } from 'antlr4/tree/Tree';
 import { InputStream, CommonTokenStream, Lexer, Parser } from 'antlr4';
 import { getRegisterNumber, between, atoi } from '@jupitersim/helpers';
-import { I, M, A, F, Zifencei, Zicsr, Expr, Lbl, Directives } from './listeners';
+import { I, M, A, F, D, Zifencei, Zicsr, Expr, Lbl, Directives } from './listeners';
 import {
   ASMFile,
   DebugInfo,
@@ -27,7 +27,7 @@ import {
 /**
  * RISC-V RV32G parser.
  */
-export abstract class RV32G extends Zifencei(Zicsr(F(A(M(I(Expr(Directives(Lbl(RISCVListener))))))))) {
+export abstract class RV32G extends Zifencei(Zicsr(D(F(A(M(I(Expr(Directives(Lbl(RISCVListener)))))))))) {
   /** RISC-V assembly file name. */
   readonly filename: string;
   /** RISC-V assembly file code. */
@@ -306,7 +306,7 @@ export abstract class RV32G extends Zifencei(Zicsr(F(A(M(I(Expr(Directives(Lbl(R
   protected fmvxw?: (ctx: RType) => void;
   /** fmv.x.s instruction listener. */
   protected fmvxs?: (ctx: RType) => void;
-  /** feqs instruction listener. */
+  /** feq.s instruction listener. */
   protected feqs?: (ctx: RType) => void;
   /** flt.s instruction listener. */
   protected flts?: (ctx: RType) => void;
@@ -332,6 +332,69 @@ export abstract class RV32G extends Zifencei(Zicsr(F(A(M(I(Expr(Directives(Lbl(R
   protected fabss?: (ctx: Pseudo) => void;
   /** fneg.s pseudo listener. */
   protected fnegs?: (ctx: Pseudo) => void;
+
+  /** fld instruction listener. */
+  protected fld?: (ctx: IType) => void;
+  /** fsd instruction listener. */
+  protected fsd?: (ctx: SType) => void;
+  /** fmadd.d instruction listener. */
+  protected fmaddd?: (ctx: R4Type) => void;
+  /** fmsub.d instruction listener. */
+  protected fmsubd?: (ctx: R4Type) => void;
+  /** fnmsub.d instruction listener. */
+  protected fnmsubd?: (ctx: R4Type) => void;
+  /** fnmadd.d instruction listener. */
+  protected fnmaddd?: (ctx: R4Type) => void;
+  /** fadd.d instruction listener. */
+  protected faddd?: (ctx: RType) => void;
+  /** fsub.d instruction listener. */
+  protected fsubd?: (ctx: RType) => void;
+  /** fmul.d instruction listener. */
+  protected fmuld?: (ctx: RType) => void;
+  /** fdiv.d instruction listener. */
+  protected fdivd?: (ctx: RType) => void;
+  /** fsqrt.d instruction listener. */
+  protected fsqrtd?: (ctx: RType) => void;
+  /** fsgnj.d instruction listener. */
+  protected fsgnjd?: (ctx: RType) => void;
+  /** fsgnjn.d instruction listener. */
+  protected fsgnjnd?: (ctx: RType) => void;
+  /** fsgnjx.d instruction listener. */
+  protected fsgnjxd?: (ctx: RType) => void;
+  /** fmin.d instruction listener. */
+  protected fmind?: (ctx: RType) => void;
+  /** fmax.d instruction listener. */
+  protected fmaxd?: (ctx: RType) => void;
+  /** fcvt.s.d instruction listener. */
+  protected fcvtsd?: (ctx: RType) => void;
+  /** fcvt.d.s instruction listener. */
+  protected fcvtds?: (ctx: RType) => void;
+  /** feq.d instruction listener. */
+  protected feqd?: (ctx: RType) => void;
+  /** flt.d instruction listener. */
+  protected fltd?: (ctx: RType) => void;
+  /** fle.d instruction listener. */
+  protected fled?: (ctx: RType) => void;
+  /** fclass.d instruction listener. */
+  protected fclassd?: (ctx: RType) => void;
+  /** fcvt.w.d instruction listener. */
+  protected fcvtwd?: (ctx: RType) => void;
+  /** fcvt.wu.d instruction listener. */
+  protected fcvtwud?: (ctx: RType) => void;
+  /** fcvt.d.w instruction listener. */
+  protected fcvtdw?: (ctx: RType) => void;
+  /** fcvt.d.wu instruction listener. */
+  protected fcvtdwu?: (ctx: RType) => void;
+  /** fld pseudo listener. */
+  protected fldg?: (ctx: Pseudo) => void;
+  /** fsd pseudo listener. */
+  protected fsdg?: (ctx: Pseudo) => void;
+  /** fmv.d pseudo listener. */
+  protected fmvd?: (ctx: Pseudo) => void;
+  /** fabs.d pseudo listener. */
+  protected fabsd?: (ctx: Pseudo) => void;
+  /** fneg.d pseudo listener. */
+  protected fnegd?: (ctx: Pseudo) => void;
 
   /** csrrw instruction listener. */
   protected csrrw?: (ctx: IType) => void;
