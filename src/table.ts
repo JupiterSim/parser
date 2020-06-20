@@ -5,7 +5,7 @@ import { DebugInfo } from './debug';
 /**
  * Assembler label.
  */
-export interface Label {
+export interface Sym {
   /** Symbol segment. */
   readonly segment: Segment;
   /** Symbol debug information. */
@@ -21,14 +21,14 @@ export interface SymbolTable {
   /** Globals symbols. */
   readonly globals: {
     /** Symbol name. */
-    [symbol: string]: Label;
+    [symbol: string]: Sym;
   };
   /** Local symbols. */
   readonly locals: {
     /** File name where the local symbol is. */
     [filename: string]: {
       /** Symbol name. */
-      [symbol: string]: Label;
+      [symbol: string]: Sym;
     };
   };
   /** Local expressions. */
