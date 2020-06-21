@@ -94,7 +94,7 @@ class RV32IEmpty extends Test {
 }
 
 class RV32I extends Test {
-  private: SinonSpy;
+  private spy: SinonSpy;
   constructor(spy: SinonSpy) {
     super(code);
     this.spy = spy;
