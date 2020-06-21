@@ -2,7 +2,7 @@
   "include": ["src/**/*.ts"],
   "compilerOptions": {
     /* Basic Options */
-    "target": "es6",
+    "target": "es5",
     "module": "commonjs",
     "declaration": true,
     "outDir": "./dist",
