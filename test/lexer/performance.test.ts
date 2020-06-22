@@ -9,8 +9,8 @@ describe('Lexer Performance', () => {
   const start = process.hrtime();
   lexer.tokens();
   const time = process.hrtime(start)[1] / 1000000;
-  it('should be less than 60ms', () => {
-    chai.expect(time).to.be.lt(60);
+  it('should be less than 100ms', () => {
+    chai.expect(time).to.be.lt(100);
     console.log(time);
   });
 });
