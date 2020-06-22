@@ -14,8 +14,8 @@ describe('Lexer F registers', () => {
   for (let i = 0; i < 64; i++) expect.push(IDS.FREG);
   expect.push(IDS.EOL);
   expect.push(IDS.EOF);
-  tokens.forEach((e, i) => {
-    it(`id should be ${expect[i]}`, () => {
+  it('should match all expected tokens', () => {
+    tokens.forEach((e, i) => {
       chai.expect(e.id).to.eq(expect[i]);
     });
   });

@@ -11,8 +11,8 @@ describe('Lexer Strings', () => {
     chai.expect(tokens.length).to.eq(8);
   });
   const expect = [IDS.STRING, IDS.STRING, IDS.STRING, IDS.CHAR, IDS.CHAR, IDS.CHAR, IDS.EOL, IDS.EOF];
-  tokens.forEach((e, i) => {
-    it(`id should be ${expect[i]}`, () => {
+  it('should match all expected tokens', () => {
+    tokens.forEach((e, i) => {
       chai.expect(e.id).to.eq(expect[i]);
     });
   });

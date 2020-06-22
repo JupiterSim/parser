@@ -11,8 +11,8 @@ describe('Lexer Relocations', () => {
     chai.expect(tokens.length).to.eq(6);
   });
   const expect = [IDS.R_HI, IDS.R_LO, IDS.R_PCREL_HI, IDS.R_PCREL_LO, IDS.EOL, IDS.EOF];
-  tokens.forEach((e, i) => {
-    it(`id should be ${expect[i]}`, () => {
+  it('should match all expected tokens', () => {
+    tokens.forEach((e, i) => {
       chai.expect(e.id).to.eq(expect[i]);
     });
   });
