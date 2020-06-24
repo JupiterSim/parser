@@ -255,6 +255,12 @@ const RULES = [
   { name: 'ERROR', regex: '.' }
 ];
 
+/** Label regex. */
+const LABEL = /^[a-zA-Z_$@][.a-zA-Z0-9_$@]*:/;
+
+/** ID regex. */
+const ID = /^[a-zA-Z_$@][.a-zA-Z0-9_$@]*/;
+
 /** Single regex matcher. */
 const REGEX = new RegExp(`^${RULES.map((e) => `(?<${e.name}>${e.regex})`).join('|')}`);
 
@@ -354,7 +360,8 @@ export class Lexer {
       if (this.buff.charAt(this.pos) === "'") return this.getChar();
       const data = this.buff.substring(this.pos);
       const match: any = REGEX.exec(data);
-      const idMatch = /^[.a-zA-Z_$@][.a-zA-Z0-9_$@]*/.exec(data);
+      const idMatch = ID.exec(data);
+      const labelMatch = LABEL.exec(data);
       // find if a regex group match
       for (let i = 0; i < NAMES.length; i++) {
         const name = NAMES[i];
@@ -363,7 +370,10 @@ export class Lexer {
         let id = IDS[name];
         let value: string = match.groups[name];
         // ensure longest match
-        if (id !== IDS.ID && idMatch && idMatch[0].length > value.length) {
+        if (id !== IDS.LABEL && labelMatch && labelMatch[0].length > value.length) {
+          id = IDS.LABEL;
+          value = labelMatch[0];
+        } else if (id !== IDS.ID && idMatch && idMatch[0].length > value.length) {
           id = IDS.ID;
           value = idMatch[0];
         }
